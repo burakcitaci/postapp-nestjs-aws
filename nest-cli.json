@@ -1,0 +1,15 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "projects": {
+    "postapp-library": {
+      "type": "library",
+      "root": "libs/postapp-library",
+      "entryFile": "index",
+      "sourceRoot": "libs/postapp-library/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/postapp-library/tsconfig.lib.json"
+      }
+    }
+  }
+}

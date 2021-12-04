@@ -1,0 +1,51 @@
+service: postapp-nestjs-blankapp-lambda
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: eu-west-3
+  lambdaHashingVersion: 20201221
+  environment:
+    USERS_TABLE_NAME: ${self:custom.usersTable.name}
+    POSTS_TABLE_NAME: ${self:custom.postsTable.name}
+  iamRoleStatements:  ${file(iam/usersTableIAM.yml)}
+    
+
+plugins:
+  - serverless-offline
+
+functions:
+  index:
+    handler: dist/src/lambda.handler
+    events:
+      - http:
+          path: '/'
+          method: any
+      - http:
+          path: '/users/{userId}'
+          method: GET
+      - http:
+          path: '/users/createUser'
+          method: POST
+      - http:
+          path: '/posts/{postId}'
+          method: GET
+      - http:
+          path: '/posts/addPost'
+          method: POST
+      - http:
+          path: '{proxy+}'
+          method: any
+     
+custom:
+  usersTable:
+    name: ${self:provider.stage}-users
+    arn: !GetAtt usersTable.Arn
+  postsTable:
+    name: ${self:provider.stage}-posts
+    arn: !GetAtt posts.Arn
+    
+resources:
+  Resources:
+    usersTable: ${file(resources/usersTable.yml):usersTable}
+    postsTable: ${file(resources/postsTable.yml):postsTable}

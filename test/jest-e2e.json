@@ -1,0 +1,17 @@
+{
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "@app/postapp-library/(.*)": "<rootDir>/../libs/postapp-library/src/$1",
+    "@app/postapp-library": "<rootDir>/../libs/postapp-library/src"
+  }
+}
